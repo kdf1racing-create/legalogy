@@ -46,6 +46,7 @@ export type AuthChoice =
   | "qwen-portal"
   | "xai-api-key"
   | "qianfan-api-key"
+  | "hyperbolic-api-key"
   | "custom-api-key"
   | "skip";
 export type AuthChoiceGroupId =
@@ -69,6 +70,7 @@ export type AuthChoiceGroupId =
   | "qwen"
   | "together"
   | "huggingface"
+  | "hyperbolic"
   | "qianfan"
   | "xai"
   | "custom";

@@ -251,6 +251,18 @@ export async function setHuggingfaceApiKey(key: string, agentDir?: string) {
   });
 }
 
+export function setHyperbolicApiKey(key: string, agentDir?: string) {
+  upsertAuthProfile({
+    profileId: "hyperbolic:default",
+    credential: {
+      type: "api_key",
+      provider: "hyperbolic",
+      key,
+    },
+    agentDir: resolveAuthAgentDir(agentDir),
+  });
+}
+
 export function setQianfanApiKey(key: string, agentDir?: string) {
   upsertAuthProfile({
     profileId: "qianfan:default",

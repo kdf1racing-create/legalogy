@@ -1,5 +1,6 @@
 import type { ApplyAuthChoiceParams, ApplyAuthChoiceResult } from "./auth-choice.apply.js";
 import { ensureAuthProfileStore, resolveAuthProfileOrder } from "../agents/auth-profiles.js";
+import { HYPERBOLIC_DEFAULT_MODEL_REF } from "../agents/hyperbolic-models.js";
 import { resolveEnvApiKey } from "../agents/model-auth.js";
 import {
   formatApiKeyPreview,
@@ -891,6 +892,64 @@ export async function applyAuthChoiceApiProviders(
         applyDefaultConfig: applyTogetherConfig,
         applyProviderConfig: applyTogetherProviderConfig,
         noteDefault: TOGETHER_DEFAULT_MODEL_REF,
+        noteAgentModel,
+        prompter: params.prompter,
+      });
+      nextConfig = applied.config;
+      agentModelOverride = applied.agentModelOverride ?? agentModelOverride;
+    }
+    return { config: nextConfig, agentModelOverride };
+  }
+
+  if (authChoice === "hyperbolic-api-key") {
+    let hasCredential = false;
+
+    if (!hasCredential && params.opts?.token && params.opts?.tokenProvider === "hyperbolic") {
+      await setHyperbolicApiKey(normalizeApiKeyInput(params.opts.token), params.agentDir);
+      hasCredential = true;
+    }
+
+    if (!hasCredential) {
+      await params.prompter.note(
+        [
+          "Hyperbolic provides access to Llama 3 and other open-source models.",
+          "Get your API key at: https://app.hyperbolic.xyz/",
+        ].join("\n"),
+        "Hyperbolic",
+      );
+    }
+
+    const envKey = resolveEnvApiKey("hyperbolic");
+    if (envKey) {
+      const useExisting = await params.prompter.confirm({
+        message: `Use existing HYPERBOLIC_API_KEY (${envKey.source}, ${formatApiKeyPreview(envKey.apiKey)})?`,
+        initialValue: true,
+      });
+      if (useExisting) {
+        await setHyperbolicApiKey(envKey.apiKey, params.agentDir);
+        hasCredential = true;
+      }
+    }
+    if (!hasCredential) {
+      const key = await params.prompter.text({
+        message: "Enter Hyperbolic API key",
+        validate: validateApiKeyInput,
+      });
+      await setHyperbolicApiKey(normalizeApiKeyInput(String(key ?? "")), params.agentDir);
+    }
+    nextConfig = applyAuthProfileConfig(nextConfig, {
+      profileId: "hyperbolic:default",
+      provider: "hyperbolic",
+      mode: "api_key",
+    });
+    {
+      const applied = await applyDefaultModelChoice({
+        config: nextConfig,
+        setDefaultModel: params.setDefaultModel,
+        defaultModel: HYPERBOLIC_DEFAULT_MODEL_REF,
+        applyDefaultConfig: applyHyperbolicConfig,
+        applyProviderConfig: applyHyperbolicProviderConfig,
+        noteDefault: HYPERBOLIC_DEFAULT_MODEL_REF,
         noteAgentModel,
         prompter: params.prompter,
       });

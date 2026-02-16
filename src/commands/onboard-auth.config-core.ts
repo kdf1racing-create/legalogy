@@ -6,6 +6,12 @@ import {
   HUGGINGFACE_MODEL_CATALOG,
 } from "../agents/huggingface-models.js";
 import {
+  buildHyperbolicModelDefinition,
+  HYPERBOLIC_BASE_URL,
+  HYPERBOLIC_DEFAULT_MODEL_REF,
+  HYPERBOLIC_MODEL_CATALOG,
+} from "../agents/hyperbolic-models.js";
+import {
   buildQianfanProvider,
   buildXiaomiProvider,
   QIANFAN_DEFAULT_MODEL_ID,
@@ -351,6 +357,34 @@ export function applyTogetherConfig(cfg: LegalogyConfig): LegalogyConfig {
 /**
  * Apply Hugging Face (Inference Providers) provider configuration without changing the default model.
  */
+/**
+ * Apply Hyperbolic provider configuration without changing the default model.
+ */
+export function applyHyperbolicProviderConfig(cfg: LegalogyConfig): LegalogyConfig {
+  const models = { ...cfg.agents?.defaults?.models };
+  models[HYPERBOLIC_DEFAULT_MODEL_REF] = {
+    ...models[HYPERBOLIC_DEFAULT_MODEL_REF],
+    alias: models[HYPERBOLIC_DEFAULT_MODEL_REF]?.alias ?? "Hyperbolic",
+  };
+
+  const hyperbolicModels = HYPERBOLIC_MODEL_CATALOG.map(buildHyperbolicModelDefinition);
+  return applyProviderConfigWithModelCatalog(cfg, {
+    agentModels: models,
+    providerId: "hyperbolic",
+    api: "openai-completions",
+    baseUrl: HYPERBOLIC_BASE_URL,
+    catalogModels: hyperbolicModels,
+  });
+}
+
+/**
+ * Apply Hyperbolic provider configuration AND set Hyperbolic as the default model.
+ */
+export function applyHyperbolicConfig(cfg: LegalogyConfig): LegalogyConfig {
+  const next = applyHyperbolicProviderConfig(cfg);
+  return applyAgentDefaultModelPrimary(next, HYPERBOLIC_DEFAULT_MODEL_REF);
+}
+
 export function applyHuggingfaceProviderConfig(cfg: LegalogyConfig): LegalogyConfig {
   const models = { ...cfg.agents?.defaults?.models };
   models[HUGGINGFACE_DEFAULT_MODEL_REF] = {

@@ -155,6 +155,12 @@ const AUTH_CHOICE_GROUP_DEFS: {
     choices: ["cloudflare-ai-gateway-api-key"],
   },
   {
+    value: "hyperbolic",
+    label: "Hyperbolic",
+    hint: "API key",
+    choices: ["hyperbolic-api-key"],
+  },
+  {
     value: "custom",
     label: "Custom Provider",
     hint: "Any OpenAI or Anthropic compatible endpoint",
@@ -295,6 +301,11 @@ const BASE_AUTH_CHOICE_OPTIONS: ReadonlyArray<AuthChoiceOption> = [
     value: "minimax-api-lightning",
     label: "MiniMax M2.5 Lightning",
     hint: "Faster, higher output cost",
+  },
+  {
+    value: "hyperbolic-api-key",
+    label: "Hyperbolic API key",
+    hint: "Llama 3 and more via Hyperbolic",
   },
   { value: "custom-api-key", label: "Custom Provider" },
 ];
