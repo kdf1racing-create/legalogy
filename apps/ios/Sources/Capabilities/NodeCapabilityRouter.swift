@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import LegalogyKit
 
 @MainActor
 final class NodeCapabilityRouter {

@@ -104,18 +104,18 @@ function expectAliasPreserved(
 
 describe("writeOAuthCredentials", () => {
   const lifecycle = createAuthTestLifecycle([
-    "OPENCLAW_STATE_DIR",
-    "OPENCLAW_AGENT_DIR",
+    "LEGALOGY_STATE_DIR",
+    "LEGALOGY_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
-    "OPENCLAW_OAUTH_DIR",
+    "LEGALOGY_OAUTH_DIR",
   ]);
 
   afterEach(async () => {
     await lifecycle.cleanup();
   });
 
-  it("writes auth-profiles.json under OPENCLAW_AGENT_DIR when set", async () => {
-    const env = await setupAuthTestEnv("openclaw-oauth-");
+  it("writes auth-profiles.json under LEGALOGY_AGENT_DIR when set", async () => {
+    const env = await setupAuthTestEnv("legalogy-oauth-");
     lifecycle.setStateDir(env.stateDir);
 
     const creds = {
@@ -143,8 +143,8 @@ describe("writeOAuthCredentials", () => {
 
 describe("setMinimaxApiKey", () => {
   const lifecycle = createAuthTestLifecycle([
-    "OPENCLAW_STATE_DIR",
-    "OPENCLAW_AGENT_DIR",
+    "LEGALOGY_STATE_DIR",
+    "LEGALOGY_AGENT_DIR",
     "PI_CODING_AGENT_DIR",
   ]);
 
@@ -152,8 +152,8 @@ describe("setMinimaxApiKey", () => {
     await lifecycle.cleanup();
   });
 
-  it("writes to OPENCLAW_AGENT_DIR when set", async () => {
-    const env = await setupAuthTestEnv("openclaw-minimax-", { agentSubdir: "custom-agent" });
+  it("writes to LEGALOGY_AGENT_DIR when set", async () => {
+    const env = await setupAuthTestEnv("legalogy-minimax-", { agentSubdir: "custom-agent" });
     lifecycle.setStateDir(env.stateDir);
 
     await setMinimaxApiKey("sk-minimax-test");

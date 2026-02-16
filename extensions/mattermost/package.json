@@ -1,13 +1,13 @@
 {
-  "name": "@openclaw/mattermost",
+  "name": "@legalogy/mattermost",
   "version": "2026.2.16",
   "private": true,
-  "description": "OpenClaw Mattermost channel plugin",
+  "description": "Legalogy Mattermost channel plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ],
@@ -21,7 +21,7 @@
       "order": 65
     },
     "install": {
-      "npmSpec": "@openclaw/mattermost",
+      "npmSpec": "@legalogy/mattermost",
       "localPath": "extensions/mattermost",
       "defaultChoice": "npm"
     }

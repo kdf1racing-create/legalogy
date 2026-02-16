@@ -1,16 +1,16 @@
 {
-  "name": "@openclaw/tlon",
+  "name": "@legalogy/tlon",
   "version": "2026.2.16",
   "private": true,
-  "description": "OpenClaw Tlon/Urbit channel plugin",
+  "description": "Legalogy Tlon/Urbit channel plugin",
   "type": "module",
   "dependencies": {
     "@urbit/aura": "^3.0.0"
   },
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ],
@@ -25,7 +25,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/tlon",
+      "npmSpec": "@legalogy/tlon",
       "localPath": "extensions/tlon",
       "defaultChoice": "npm"
     }

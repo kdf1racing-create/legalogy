@@ -6,8 +6,8 @@
     {
       "layers" : [
         {
-          "image-name" : "openclaw-mac.png",
-          "name" : "openclaw-mac",
+          "image-name" : "legalogy-mac.png",
+          "name" : "legalogy-mac",
           "position" : {
             "scale" : 1.07,
             "translation-in-points" : [

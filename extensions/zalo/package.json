@@ -1,15 +1,15 @@
 {
-  "name": "@openclaw/zalo",
+  "name": "@legalogy/zalo",
   "version": "2026.2.16",
-  "description": "OpenClaw Zalo channel plugin",
+  "description": "Legalogy Zalo channel plugin",
   "type": "module",
   "dependencies": {
     "undici": "7.22.0"
   },
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ],
@@ -27,7 +27,7 @@
       "quickstartAllowFrom": true
     },
     "install": {
-      "npmSpec": "@openclaw/zalo",
+      "npmSpec": "@legalogy/zalo",
       "localPath": "extensions/zalo",
       "defaultChoice": "npm"
     }

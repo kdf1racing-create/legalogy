@@ -1,0 +1,14 @@
+[Unit]
+Description=Legalogy Auth Expiry Monitor
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/admin/legalogy/scripts/auth-monitor.sh
+# Configure notification channels via environment
+Environment=WARN_HOURS=2
+# Environment=NOTIFY_PHONE=+1234567890
+# Environment=NOTIFY_NTFY=legalogy-alerts
+
+[Install]
+WantedBy=default.target

@@ -1,6 +1,6 @@
-# @openclaw/voice-call
+# @legalogy/voice-call
 
-Official Voice Call plugin for **OpenClaw**.
+Official Voice Call plugin for **Legalogy**.
 
 Providers:
 
@@ -9,15 +9,15 @@ Providers:
 - **Plivo** (Voice API + XML transfer + GetInput speech)
 - **Mock** (dev/no network)
 
-Docs: `https://docs.openclaw.ai/plugins/voice-call`
-Plugin system: `https://docs.openclaw.ai/plugin`
+Docs: `https://docs.legalogy.ai/plugins/voice-call`
+Plugin system: `https://docs.legalogy.ai/plugin`
 
 ## Install (local dev)
 
-### Option A: install via OpenClaw (recommended)
+### Option A: install via Legalogy (recommended)
 
 ```bash
-openclaw plugins install @openclaw/voice-call
+legalogy plugins install @legalogy/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -25,9 +25,9 @@ Restart the Gateway afterwards.
 ### Option B: copy into your global extensions folder (dev)
 
 ```bash
-mkdir -p ~/.openclaw/extensions
-cp -R extensions/voice-call ~/.openclaw/extensions/voice-call
-cd ~/.openclaw/extensions/voice-call && pnpm install
+mkdir -p ~/.legalogy/extensions
+cp -R extensions/voice-call ~/.legalogy/extensions/voice-call
+cd ~/.legalogy/extensions/voice-call && pnpm install
 ```
 
 ## Config
@@ -112,13 +112,13 @@ Notes:
 ## CLI
 
 ```bash
-openclaw voicecall call --to "+15555550123" --message "Hello from OpenClaw"
-openclaw voicecall continue --call-id <id> --message "Any questions?"
-openclaw voicecall speak --call-id <id> --message "One moment"
-openclaw voicecall end --call-id <id>
-openclaw voicecall status --call-id <id>
-openclaw voicecall tail
-openclaw voicecall expose --mode funnel
+legalogy voicecall call --to "+15555550123" --message "Hello from Legalogy"
+legalogy voicecall continue --call-id <id> --message "Any questions?"
+legalogy voicecall speak --call-id <id> --message "One moment"
+legalogy voicecall end --call-id <id>
+legalogy voicecall status --call-id <id>
+legalogy voicecall tail
+legalogy voicecall expose --mode funnel
 ```
 
 ## Tool

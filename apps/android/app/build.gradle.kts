@@ -8,17 +8,17 @@ plugins {
 }
 
 android {
-  namespace = "ai.openclaw.android"
+  namespace = "ai.legalogy.android"
   compileSdk = 36
 
   sourceSets {
     getByName("main") {
-      assets.srcDir(file("../../shared/OpenClawKit/Sources/OpenClawKit/Resources"))
+      assets.srcDir(file("../../shared/LegalogyKit/Sources/LegalogyKit/Resources"))
     }
   }
 
   defaultConfig {
-    applicationId = "ai.openclaw.android"
+    applicationId = "ai.legalogy.android"
     minSdk = 31
     targetSdk = 36
     versionCode = 202602160
@@ -84,7 +84,7 @@ androidComponents {
         val versionName = output.versionName.orNull ?: "0"
         val buildType = variant.buildType
 
-        val outputFileName = "openclaw-${versionName}-${buildType}.apk"
+        val outputFileName = "legalogy-${versionName}-${buildType}.apk"
         output.outputFileName = outputFileName
       }
   }

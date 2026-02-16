@@ -1,9 +1,9 @@
 import EventKit
 import Foundation
-import OpenClawKit
+import LegalogyKit
 
 final class CalendarService: CalendarServicing {
-    func events(params: OpenClawCalendarEventsParams) async throws -> OpenClawCalendarEventsPayload {
+    func events(params: LegalogyCalendarEventsParams) async throws -> LegalogyCalendarEventsPayload {
         let store = EKEventStore()
         let status = EKEventStore.authorizationStatus(for: .event)
         let authorized = EventKitAuthorization.allowsRead(status: status)
@@ -23,7 +23,7 @@ final class CalendarService: CalendarServicing {
 
         let formatter = ISO8601DateFormatter()
         let payload = selected.map { event in
-            OpenClawCalendarEventPayload(
+            LegalogyCalendarEventPayload(
                 identifier: event.eventIdentifier ?? UUID().uuidString,
                 title: event.title ?? "(untitled)",
                 startISO: formatter.string(from: event.startDate),
@@ -33,10 +33,10 @@ final class CalendarService: CalendarServicing {
                 calendarTitle: event.calendar.title)
         }
 
-        return OpenClawCalendarEventsPayload(events: payload)
+        return LegalogyCalendarEventsPayload(events: payload)
     }
 
-    func add(params: OpenClawCalendarAddParams) async throws -> OpenClawCalendarAddPayload {
+    func add(params: LegalogyCalendarAddParams) async throws -> LegalogyCalendarAddPayload {
         let store = EKEventStore()
         let status = EKEventStore.authorizationStatus(for: .event)
         let authorized = EventKitAuthorization.allowsWrite(status: status)
@@ -83,7 +83,7 @@ final class CalendarService: CalendarServicing {
 
         try store.save(event, span: .thisEvent)
 
-        let payload = OpenClawCalendarEventPayload(
+        let payload = LegalogyCalendarEventPayload(
             identifier: event.eventIdentifier ?? UUID().uuidString,
             title: event.title ?? title,
             startISO: formatter.string(from: event.startDate),
@@ -92,7 +92,7 @@ final class CalendarService: CalendarServicing {
             location: event.location,
             calendarTitle: event.calendar.title)
 
-        return OpenClawCalendarAddPayload(event: payload)
+        return LegalogyCalendarAddPayload(event: payload)
     }
 
     private static func resolveCalendar(

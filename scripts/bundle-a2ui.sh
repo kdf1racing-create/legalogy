@@ -11,10 +11,19 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 HASH_FILE="$ROOT_DIR/src/canvas-host/a2ui/.bundle.hash"
 OUTPUT_FILE="$ROOT_DIR/src/canvas-host/a2ui/a2ui.bundle.js"
 A2UI_RENDERER_DIR="$ROOT_DIR/vendor/a2ui/renderers/lit"
-A2UI_APP_DIR="$ROOT_DIR/apps/shared/OpenClawKit/Tools/CanvasA2UI"
+A2UI_APP_DIR="$ROOT_DIR/apps/shared/LegalogyKit/Tools/CanvasA2UI"
 
 # Docker builds exclude vendor/apps via .dockerignore.
 # In that environment we can keep a prebuilt bundle only if it exists.
+echo "Check 1: $A2UI_RENDERER_DIR"
+if [[ ! -d "$A2UI_RENDERER_DIR" ]]; then
+  echo "Renderer dir missing"
+fi
+echo "Check 2: $A2UI_APP_DIR"
+if [[ ! -d "$A2UI_APP_DIR" ]]; then
+  echo "App dir missing"
+fi
+
 if [[ ! -d "$A2UI_RENDERER_DIR" || ! -d "$A2UI_APP_DIR" ]]; then
   if [[ -f "$OUTPUT_FILE" ]]; then
     echo "A2UI sources missing; keeping prebuilt bundle."

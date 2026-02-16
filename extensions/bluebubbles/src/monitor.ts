@@ -1,11 +1,11 @@
+import type { LegalogyConfig } from "legalogy/plugin-sdk";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { OpenClawConfig } from "openclaw/plugin-sdk";
-import { timingSafeEqual } from "node:crypto";
 import {
   registerWebhookTarget,
   rejectNonPostWebhookRequest,
   resolveWebhookTargets,
-} from "openclaw/plugin-sdk";
+} from "legalogy/plugin-sdk";
+import { timingSafeEqual } from "node:crypto";
 import {
   normalizeWebhookMessage,
   normalizeWebhookReaction,
@@ -123,7 +123,7 @@ type BlueBubblesDebouncer = {
 const targetDebouncers = new Map<WebhookTarget, BlueBubblesDebouncer>();
 
 function resolveBlueBubblesDebounceMs(
-  config: OpenClawConfig,
+  config: LegalogyConfig,
   core: BlueBubblesCoreRuntime,
 ): number {
   const inbound = config.messages?.inbound;

@@ -1,8 +1,8 @@
 import {
   resolveChannelMediaMaxBytes,
-  type OpenClawConfig,
+  type LegalogyConfig,
   type PluginRuntime,
-} from "openclaw/plugin-sdk";
+} from "legalogy/plugin-sdk";
 import type { MSTeamsAccessTokenProvider } from "./attachments/types.js";
 import type {
   MSTeamsConversationStore,
@@ -92,7 +92,7 @@ async function findConversationReference(recipient: {
 }
 
 export async function resolveMSTeamsSendContext(params: {
-  cfg: OpenClawConfig;
+  cfg: LegalogyConfig;
   to: string;
 }): Promise<MSTeamsProactiveContext> {
   const msteamsCfg = params.cfg.channels?.msteams;

@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/irc",
+  "name": "@legalogy/irc",
   "version": "2026.2.16",
-  "description": "OpenClaw IRC channel plugin",
+  "description": "Legalogy IRC channel plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/discord",
+  "name": "@legalogy/discord",
   "version": "2026.2.16",
-  "description": "OpenClaw Discord channel plugin",
+  "description": "Legalogy Discord channel plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ]

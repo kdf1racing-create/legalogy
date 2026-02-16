@@ -1,17 +1,17 @@
-# @openclaw/zalo
+# @legalogy/zalo
 
-Zalo channel plugin for OpenClaw (Bot API).
+Zalo channel plugin for Legalogy (Bot API).
 
 ## Install (local checkout)
 
 ```bash
-openclaw plugins install ./extensions/zalo
+legalogy plugins install ./extensions/zalo
 ```
 
 ## Install (npm)
 
 ```bash
-openclaw plugins install @openclaw/zalo
+legalogy plugins install @legalogy/zalo
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

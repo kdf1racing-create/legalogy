@@ -1,23 +1,23 @@
 ---
-summary: "CLI reference for `openclaw config` (get/set/unset config values)"
+summary: "CLI reference for `legalogy config` (get/set/unset config values)"
 read_when:
   - You want to read or edit config non-interactively
 title: "config"
 ---
 
-# `openclaw config`
+# `legalogy config`
 
 Config helpers: get/set/unset values by path. Run without a subcommand to open
-the configure wizard (same as `openclaw configure`).
+the configure wizard (same as `legalogy configure`).
 
 ## Examples
 
 ```bash
-openclaw config get browser.executablePath
-openclaw config set browser.executablePath "/usr/bin/google-chrome"
-openclaw config set agents.defaults.heartbeat.every "2h"
-openclaw config set agents.list[0].tools.exec.node "node-id-or-name"
-openclaw config unset tools.web.search.apiKey
+legalogy config get browser.executablePath
+legalogy config set browser.executablePath "/usr/bin/google-chrome"
+legalogy config set agents.defaults.heartbeat.every "2h"
+legalogy config set agents.list[0].tools.exec.node "node-id-or-name"
+legalogy config unset tools.web.search.apiKey
 ```
 
 ## Paths
@@ -25,15 +25,15 @@ openclaw config unset tools.web.search.apiKey
 Paths use dot or bracket notation:
 
 ```bash
-openclaw config get agents.defaults.workspace
-openclaw config get agents.list[0].id
+legalogy config get agents.defaults.workspace
+legalogy config get agents.list[0].id
 ```
 
 Use the agent list index to target a specific agent:
 
 ```bash
-openclaw config get agents.list
-openclaw config set agents.list[1].tools.exec.node "node-id-or-name"
+legalogy config get agents.list
+legalogy config set agents.list[1].tools.exec.node "node-id-or-name"
 ```
 
 ## Values
@@ -42,9 +42,9 @@ Values are parsed as JSON5 when possible; otherwise they are treated as strings.
 Use `--json` to require JSON5 parsing.
 
 ```bash
-openclaw config set agents.defaults.heartbeat.every "0m"
-openclaw config set gateway.port 19001 --json
-openclaw config set channels.whatsapp.groups '["*"]' --json
+legalogy config set agents.defaults.heartbeat.every "0m"
+legalogy config set gateway.port 19001 --json
+legalogy config set channels.whatsapp.groups '["*"]' --json
 ```
 
 Restart the gateway after edits.

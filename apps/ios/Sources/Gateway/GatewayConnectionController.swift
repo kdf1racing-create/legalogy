@@ -5,7 +5,7 @@ import CoreMotion
 import CryptoKit
 import EventKit
 import Foundation
-import OpenClawKit
+import LegalogyKit
 import Network
 import Observation
 import Photos
@@ -682,7 +682,7 @@ final class GatewayConnectionController {
         if manualClientId?.isEmpty == false {
             return manualClientId!
         }
-        return "openclaw-ios"
+        return "legalogy-ios"
     }
 
     private func resolveManualPort(host: String, port: Int, useTLS: Bool) -> Int? {
@@ -712,29 +712,29 @@ final class GatewayConnectionController {
     }
 
     private func currentCaps() -> [String] {
-        var caps = [OpenClawCapability.canvas.rawValue, OpenClawCapability.screen.rawValue]
+        var caps = [LegalogyCapability.canvas.rawValue, LegalogyCapability.screen.rawValue]
 
         // Default-on: if the key doesn't exist yet, treat it as enabled.
         let cameraEnabled =
             UserDefaults.standard.object(forKey: "camera.enabled") == nil
                 ? true
                 : UserDefaults.standard.bool(forKey: "camera.enabled")
-        if cameraEnabled { caps.append(OpenClawCapability.camera.rawValue) }
+        if cameraEnabled { caps.append(LegalogyCapability.camera.rawValue) }
 
         let voiceWakeEnabled = UserDefaults.standard.bool(forKey: VoiceWakePreferences.enabledKey)
-        if voiceWakeEnabled { caps.append(OpenClawCapability.voiceWake.rawValue) }
+        if voiceWakeEnabled { caps.append(LegalogyCapability.voiceWake.rawValue) }
 
         let locationModeRaw = UserDefaults.standard.string(forKey: "location.enabledMode") ?? "off"
-        let locationMode = OpenClawLocationMode(rawValue: locationModeRaw) ?? .off
-        if locationMode != .off { caps.append(OpenClawCapability.location.rawValue) }
+        let locationMode = LegalogyLocationMode(rawValue: locationModeRaw) ?? .off
+        if locationMode != .off { caps.append(LegalogyCapability.location.rawValue) }
 
-        caps.append(OpenClawCapability.device.rawValue)
-        caps.append(OpenClawCapability.photos.rawValue)
-        caps.append(OpenClawCapability.contacts.rawValue)
-        caps.append(OpenClawCapability.calendar.rawValue)
-        caps.append(OpenClawCapability.reminders.rawValue)
+        caps.append(LegalogyCapability.device.rawValue)
+        caps.append(LegalogyCapability.photos.rawValue)
+        caps.append(LegalogyCapability.contacts.rawValue)
+        caps.append(LegalogyCapability.calendar.rawValue)
+        caps.append(LegalogyCapability.reminders.rawValue)
         if Self.motionAvailable() {
-            caps.append(OpenClawCapability.motion.rawValue)
+            caps.append(LegalogyCapability.motion.rawValue)
         }
 
         return caps
@@ -742,54 +742,54 @@ final class GatewayConnectionController {
 
     private func currentCommands() -> [String] {
         var commands: [String] = [
-            OpenClawCanvasCommand.present.rawValue,
-            OpenClawCanvasCommand.hide.rawValue,
-            OpenClawCanvasCommand.navigate.rawValue,
-            OpenClawCanvasCommand.evalJS.rawValue,
-            OpenClawCanvasCommand.snapshot.rawValue,
-            OpenClawCanvasA2UICommand.push.rawValue,
-            OpenClawCanvasA2UICommand.pushJSONL.rawValue,
-            OpenClawCanvasA2UICommand.reset.rawValue,
-            OpenClawScreenCommand.record.rawValue,
-            OpenClawSystemCommand.notify.rawValue,
-            OpenClawChatCommand.push.rawValue,
-            OpenClawTalkCommand.pttStart.rawValue,
-            OpenClawTalkCommand.pttStop.rawValue,
-            OpenClawTalkCommand.pttCancel.rawValue,
-            OpenClawTalkCommand.pttOnce.rawValue,
+            LegalogyCanvasCommand.present.rawValue,
+            LegalogyCanvasCommand.hide.rawValue,
+            LegalogyCanvasCommand.navigate.rawValue,
+            LegalogyCanvasCommand.evalJS.rawValue,
+            LegalogyCanvasCommand.snapshot.rawValue,
+            LegalogyCanvasA2UICommand.push.rawValue,
+            LegalogyCanvasA2UICommand.pushJSONL.rawValue,
+            LegalogyCanvasA2UICommand.reset.rawValue,
+            LegalogyScreenCommand.record.rawValue,
+            LegalogySystemCommand.notify.rawValue,
+            LegalogyChatCommand.push.rawValue,
+            LegalogyTalkCommand.pttStart.rawValue,
+            LegalogyTalkCommand.pttStop.rawValue,
+            LegalogyTalkCommand.pttCancel.rawValue,
+            LegalogyTalkCommand.pttOnce.rawValue,
         ]
 
         let caps = Set(self.currentCaps())
-        if caps.contains(OpenClawCapability.camera.rawValue) {
-            commands.append(OpenClawCameraCommand.list.rawValue)
-            commands.append(OpenClawCameraCommand.snap.rawValue)
-            commands.append(OpenClawCameraCommand.clip.rawValue)
+        if caps.contains(LegalogyCapability.camera.rawValue) {
+            commands.append(LegalogyCameraCommand.list.rawValue)
+            commands.append(LegalogyCameraCommand.snap.rawValue)
+            commands.append(LegalogyCameraCommand.clip.rawValue)
         }
-        if caps.contains(OpenClawCapability.location.rawValue) {
-            commands.append(OpenClawLocationCommand.get.rawValue)
+        if caps.contains(LegalogyCapability.location.rawValue) {
+            commands.append(LegalogyLocationCommand.get.rawValue)
         }
-        if caps.contains(OpenClawCapability.device.rawValue) {
-            commands.append(OpenClawDeviceCommand.status.rawValue)
-            commands.append(OpenClawDeviceCommand.info.rawValue)
+        if caps.contains(LegalogyCapability.device.rawValue) {
+            commands.append(LegalogyDeviceCommand.status.rawValue)
+            commands.append(LegalogyDeviceCommand.info.rawValue)
         }
-        if caps.contains(OpenClawCapability.photos.rawValue) {
-            commands.append(OpenClawPhotosCommand.latest.rawValue)
+        if caps.contains(LegalogyCapability.photos.rawValue) {
+            commands.append(LegalogyPhotosCommand.latest.rawValue)
         }
-        if caps.contains(OpenClawCapability.contacts.rawValue) {
-            commands.append(OpenClawContactsCommand.search.rawValue)
-            commands.append(OpenClawContactsCommand.add.rawValue)
+        if caps.contains(LegalogyCapability.contacts.rawValue) {
+            commands.append(LegalogyContactsCommand.search.rawValue)
+            commands.append(LegalogyContactsCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.calendar.rawValue) {
-            commands.append(OpenClawCalendarCommand.events.rawValue)
-            commands.append(OpenClawCalendarCommand.add.rawValue)
+        if caps.contains(LegalogyCapability.calendar.rawValue) {
+            commands.append(LegalogyCalendarCommand.events.rawValue)
+            commands.append(LegalogyCalendarCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.reminders.rawValue) {
-            commands.append(OpenClawRemindersCommand.list.rawValue)
-            commands.append(OpenClawRemindersCommand.add.rawValue)
+        if caps.contains(LegalogyCapability.reminders.rawValue) {
+            commands.append(LegalogyRemindersCommand.list.rawValue)
+            commands.append(LegalogyRemindersCommand.add.rawValue)
         }
-        if caps.contains(OpenClawCapability.motion.rawValue) {
-            commands.append(OpenClawMotionCommand.activity.rawValue)
-            commands.append(OpenClawMotionCommand.pedometer.rawValue)
+        if caps.contains(LegalogyCapability.motion.rawValue) {
+            commands.append(LegalogyMotionCommand.activity.rawValue)
+            commands.append(LegalogyMotionCommand.pedometer.rawValue)
         }
 
         return commands

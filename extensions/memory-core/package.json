@@ -1,16 +1,16 @@
 {
-  "name": "@openclaw/memory-core",
+  "name": "@legalogy/memory-core",
   "version": "2026.2.16",
   "private": true,
-  "description": "OpenClaw core memory search plugin",
+  "description": "Legalogy core memory search plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
   "peerDependencies": {
-    "openclaw": ">=2026.1.26"
+    "legalogy": ">=2026.1.26"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ]

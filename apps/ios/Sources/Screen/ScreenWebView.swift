@@ -1,4 +1,4 @@
-import OpenClawKit
+import LegalogyKit
 import SwiftUI
 import WebKit
 

@@ -27,10 +27,10 @@ const BASE_CFG = {
   agents: {
     defaults: {
       model: "anthropic/claude-opus-4-5",
-      workspace: "/tmp/openclaw",
+      workspace: "/tmp/legalogy",
     },
   },
-  session: { store: "/tmp/openclaw-sessions.json" },
+  session: { store: "/tmp/legalogy-sessions.json" },
 } as const;
 
 const CATEGORY_GUILD_CFG = {

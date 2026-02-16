@@ -1,12 +1,12 @@
 import CoreLocation
 import Foundation
-import OpenClawKit
+import LegalogyKit
 import UIKit
 
 protocol CameraServicing: Sendable {
     func listDevices() async -> [CameraController.CameraDeviceInfo]
-    func snap(params: OpenClawCameraSnapParams) async throws -> (format: String, base64: String, width: Int, height: Int)
-    func clip(params: OpenClawCameraClipParams) async throws -> (format: String, base64: String, durationMs: Int, hasAudio: Bool)
+    func snap(params: LegalogyCameraSnapParams) async throws -> (format: String, base64: String, width: Int, height: Int)
+    func clip(params: LegalogyCameraClipParams) async throws -> (format: String, base64: String, durationMs: Int, hasAudio: Bool)
 }
 
 protocol ScreenRecordingServicing: Sendable {
@@ -22,14 +22,14 @@ protocol ScreenRecordingServicing: Sendable {
 protocol LocationServicing: Sendable {
     func authorizationStatus() -> CLAuthorizationStatus
     func accuracyAuthorization() -> CLAccuracyAuthorization
-    func ensureAuthorization(mode: OpenClawLocationMode) async -> CLAuthorizationStatus
+    func ensureAuthorization(mode: LegalogyLocationMode) async -> CLAuthorizationStatus
     func currentLocation(
-        params: OpenClawLocationGetParams,
-        desiredAccuracy: OpenClawLocationAccuracy,
+        params: LegalogyLocationGetParams,
+        desiredAccuracy: LegalogyLocationAccuracy,
         maxAgeMs: Int?,
         timeoutMs: Int?) async throws -> CLLocation
     func startLocationUpdates(
-        desiredAccuracy: OpenClawLocationAccuracy,
+        desiredAccuracy: LegalogyLocationAccuracy,
         significantChangesOnly: Bool) -> AsyncStream<CLLocation>
     func stopLocationUpdates()
     func startMonitoringSignificantLocationChanges(onUpdate: @escaping @Sendable (CLLocation) -> Void)
@@ -37,32 +37,32 @@ protocol LocationServicing: Sendable {
 }
 
 protocol DeviceStatusServicing: Sendable {
-    func status() async throws -> OpenClawDeviceStatusPayload
-    func info() -> OpenClawDeviceInfoPayload
+    func status() async throws -> LegalogyDeviceStatusPayload
+    func info() -> LegalogyDeviceInfoPayload
 }
 
 protocol PhotosServicing: Sendable {
-    func latest(params: OpenClawPhotosLatestParams) async throws -> OpenClawPhotosLatestPayload
+    func latest(params: LegalogyPhotosLatestParams) async throws -> LegalogyPhotosLatestPayload
 }
 
 protocol ContactsServicing: Sendable {
-    func search(params: OpenClawContactsSearchParams) async throws -> OpenClawContactsSearchPayload
-    func add(params: OpenClawContactsAddParams) async throws -> OpenClawContactsAddPayload
+    func search(params: LegalogyContactsSearchParams) async throws -> LegalogyContactsSearchPayload
+    func add(params: LegalogyContactsAddParams) async throws -> LegalogyContactsAddPayload
 }
 
 protocol CalendarServicing: Sendable {
-    func events(params: OpenClawCalendarEventsParams) async throws -> OpenClawCalendarEventsPayload
-    func add(params: OpenClawCalendarAddParams) async throws -> OpenClawCalendarAddPayload
+    func events(params: LegalogyCalendarEventsParams) async throws -> LegalogyCalendarEventsPayload
+    func add(params: LegalogyCalendarAddParams) async throws -> LegalogyCalendarAddPayload
 }
 
 protocol RemindersServicing: Sendable {
-    func list(params: OpenClawRemindersListParams) async throws -> OpenClawRemindersListPayload
-    func add(params: OpenClawRemindersAddParams) async throws -> OpenClawRemindersAddPayload
+    func list(params: LegalogyRemindersListParams) async throws -> LegalogyRemindersListPayload
+    func add(params: LegalogyRemindersAddParams) async throws -> LegalogyRemindersAddPayload
 }
 
 protocol MotionServicing: Sendable {
-    func activities(params: OpenClawMotionActivityParams) async throws -> OpenClawMotionActivityPayload
-    func pedometer(params: OpenClawPedometerParams) async throws -> OpenClawPedometerPayload
+    func activities(params: LegalogyMotionActivityParams) async throws -> LegalogyMotionActivityPayload
+    func pedometer(params: LegalogyPedometerParams) async throws -> LegalogyPedometerPayload
 }
 
 extension CameraController: CameraServicing {}

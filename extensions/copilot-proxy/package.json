@@ -1,13 +1,13 @@
 {
-  "name": "@openclaw/copilot-proxy",
+  "name": "@legalogy/copilot-proxy",
   "version": "2026.2.16",
   "private": true,
-  "description": "OpenClaw Copilot Proxy provider plugin",
+  "description": "Legalogy Copilot Proxy provider plugin",
   "type": "module",
   "devDependencies": {
-    "openclaw": "workspace:*"
+    "legalogy": "workspace:*"
   },
-  "openclaw": {
+  "legalogy": {
     "extensions": [
       "./index.ts"
     ]

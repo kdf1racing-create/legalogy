@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { LegalogyConfig } from "../config/config.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { buildGatewayConnectionDetails, callGateway } from "../gateway/call.js";
 import { collectChannelStatusIssues } from "../infra/channels-status-issues.js";
@@ -8,7 +8,7 @@ import { healthCommand } from "./health.js";
 
 export async function checkGatewayHealth(params: {
   runtime: RuntimeEnv;
-  cfg: OpenClawConfig;
+  cfg: LegalogyConfig;
   timeoutMs?: number;
 }) {
   const gatewayDetails = buildGatewayConnectionDetails({ config: params.cfg });
