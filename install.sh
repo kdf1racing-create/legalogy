@@ -1,55 +1,74 @@
 #!/usr/bin/env bash
 set -e
 
-# Legalogy Installer
-
 echo "🚀 Installing Legalogy..."
 
-# 1. Check Prerequisites
-if ! command -v git >/dev/null 2>&1; then
-    echo "❌ Error: git is not installed."
-    exit 1
-fi
-
-if ! command -v node >/dev/null 2>&1; then
-    echo "❌ Error: node is not installed."
-    exit 1
-fi
-
-# Check Node version (simple check, warns if < 22)
-NODE_VER=$(node -v | cut -d. -f1 | tr -d 'v')
-if [ "$NODE_VER" -lt 22 ]; then
-    echo "⚠️  Warning: Legalogy requires Node.js v22+. You are running $(node -v)."
-    echo "   Installation may fail or behave unexpectedly."
-    sleep 3
-fi
-
-# 2. Install PNPM if missing
+# --- 1. Setup PNPM (User Mode) ---
+# We use the standalone installer to avoid npm permission issues (EACCES)
 if ! command -v pnpm >/dev/null 2>&1; then
-    echo "📦 Installing pnpm..."
-    npm install -g pnpm
+    echo "📦 Installing pnpm (standalone)..."
+    # Force install to user local directory
+    export PNPM_HOME="$HOME/.local/share/pnpm"
+    export PATH="$PNPM_HOME:$PATH"
+    
+    # Run the official installer, piping to sh
+    curl -fsSL https://get.pnpm.io/install.sh | sh - > /dev/null 2>&1 || true
+    
+    # Ensure it's in the path for this session
+    if [ -d "$PNPM_HOME" ]; then
+        export PATH="$PNPM_HOME:$PATH"
+    fi
+else
+    echo "✅ pnpm is already installed."
 fi
 
-# 3. Setup Directory
+# Double check pnpm is usable
+if ! command -v pnpm >/dev/null 2>&1; then
+    echo "❌ Failed to install pnpm. Please install it manually: npm install -g pnpm"
+    exit 1
+fi
+
+# --- 2. Enforce Node.js v22+ ---
+# If system node is old/missing, use pnpm to install a local copy
+CURRENT_NODE_VER="0"
+if command -v node >/dev/null 2>&1; then
+    CURRENT_NODE_VER=$(node -v | cut -d. -f1 | tr -d 'v')
+fi
+
+if [ "$CURRENT_NODE_VER" -lt 22 ]; then
+    echo "⚠️  System Node.js is v$CURRENT_NODE_VER (requires v22+)."
+    echo "⬇️  Installing Node.js v22 via pnpm..."
+    
+    # Install Node 22 managed by pnpm
+    pnpm env use --global 22
+    
+    # Re-evaluate path/node availability
+    if command -v node >/dev/null 2>&1; then
+       NEW_VER=$(node -v | cut -d. -f1 | tr -d 'v')
+       echo "✅ Now using Node.js v$NEW_VER"
+    fi
+else
+    echo "✅ Node.js $(node -v) detected."
+fi
+
+# --- 3. Clone/Update Repository ---
 INSTALL_DIR="${HOME}/legalogy"
+
 if [ -d "$INSTALL_DIR" ]; then
-    echo "⚠️  Directory $INSTALL_DIR already exists."
-    read -p "Overwrite? [y/N] " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo "Aborting."
+    echo "📂 Updating existing installation at $INSTALL_DIR..."
+    cd "$INSTALL_DIR"
+    git pull
+else
+    echo "📥 Cloning Legalogy..."
+    if ! command -v git >/dev/null 2>&1; then
+        echo "❌ Error: git is not installed. Please install git."
         exit 1
     fi
-    rm -rf "$INSTALL_DIR"
+    git clone https://github.com/kdf1racing-create/legalogy.git "$INSTALL_DIR"
+    cd "$INSTALL_DIR"
 fi
 
-# 4. Clone Repository
-echo "📥 Cloning Legalogy from GitHub..."
-git clone https://github.com/kdf1racing-create/legalogy.git "$INSTALL_DIR"
-
-cd "$INSTALL_DIR"
-
-# 5. Install Dependencies & Build
+# --- 4. Install & Build ---
 echo "🧶 Installing dependencies..."
 pnpm install
 
@@ -57,10 +76,11 @@ echo "🛠️  Building Legalogy..."
 pnpm build
 pnpm ui:build
 
-# 6. Finalize
+# --- 5. Finish ---
+echo ""
 echo "✅ Installation Complete!"
 echo ""
 echo "To start Legalogy:"
-echo "  cd ~/legalogy"
+echo "  cd $INSTALL_DIR"
 echo "  ./legalogy.mjs gateway"
 echo ""
