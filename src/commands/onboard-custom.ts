@@ -516,6 +516,15 @@ export async function promptCustomApiConfig(params: {
 
   const baseInput = await promptBaseUrlAndKey({ prompter });
   let baseUrl = baseInput.baseUrl;
+
+  // Auto-fix common paste errors where user includes the endpoint path
+  baseUrl = baseUrl.replace(/\/chat\/completions\/?$/, "");
+  baseUrl = baseUrl.replace(/\/messages\/?$/, "");
+  // Ensure no trailing slash for consistency (though URL constructor handles it)
+  if (baseUrl.endsWith("/")) {
+    baseUrl = baseUrl.slice(0, -1);
+  }
+
   let apiKey = baseInput.apiKey;
 
   const compatibilityChoice = await prompter.select({
