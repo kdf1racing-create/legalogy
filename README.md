@@ -46,6 +46,14 @@ Model note: while any model is supported, I strongly recommend **Anthropic Pro/M
 
 Runtime: **Node ≥22**.
 
+To install **Legalogy** with a single command:
+
+```bash
+curl -sL https://raw.githubusercontent.com/kdf1racing-create/legalogy/main/install.sh | bash
+```
+
+Alternatively, you can install manually:
+
 ```bash
 npm install -g legalogy@latest
 # or: pnpm add -g legalogy@latest
